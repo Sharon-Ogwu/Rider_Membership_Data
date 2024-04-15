@@ -3,7 +3,7 @@ title: 'Rider Membership Data: Portraying the disparity in the number of registe
   riders across categories amidst an escalated registration fee.'
 author: "Sharon Ogwu"
 date: "15th April 2024"
-output:
+output: 
   html_document:
     df_print: paged
   pdf_document: default
@@ -68,9 +68,9 @@ ggplot(data = summary_datas) +
         plot.title = element_text(hjust = 0.5),
         plot.subtitle = element_text(hjust = 0.5)) +
   scale_y_continuous(
-    limits = c(0, 100),  # Adjusted to 100% to include all data points
+    limits = c(0, 100),  
     labels = percent_format(accuracy = 1, scale = 1/1),
-    breaks = seq(0, 100, 10)  # Adjust breaks to every 10%
+    breaks = seq(0, 100, 10)  
   )
 ```
 
