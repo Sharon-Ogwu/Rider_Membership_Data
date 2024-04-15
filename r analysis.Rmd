@@ -52,15 +52,13 @@ table(R_data$member_casual)
       
 summary_datas <- data.frame(
   member_casual = c("member", "casual"),
-  count = c(378.407, 48.480)  # these counts should be in thousands as per your data
+  count = c(378.407, 48.480)  
 )
-view(summary_datas)
-
-# Convert counts to percentages
+# Converting the count to percentage
 total_counts <- sum(summary_datas$count)
 summary_datas$percentage <- (summary_datas$count / total_counts) * 100
 
-# Create the plot
+# Creating the chart
 ggplot(data = summary_datas) +
   geom_bar(mapping = aes(x = member_casual, y = percentage, fill = member_casual), stat = "identity") +
   labs(title = "Rider Membership Data", subtitle = "variation in the number of registered riders based on category") +ylab("count of riders by category")+
