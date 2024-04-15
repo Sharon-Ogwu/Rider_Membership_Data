@@ -1,0 +1,76 @@
+---
+title: 'Rider Membership Data: Portraying the disparity in the number of registered
+  riders across categories amidst an escalated registration fee.'
+author: "Sharon Ogwu"
+date: "15th April 2024"
+output:
+  html_document:
+    df_print: paged
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(tidyr)
+library(dplyr)
+library(here)
+library(skimr)
+library(janitor)
+library(readr)
+library(lubridate)
+library(ggplot2)
+library(scales)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### This analysis was conducted for a rider company to determine if the volume of registered riders in their specific categories, particularly annual members, has decreased due to an increased registration fee in the preceding year
+
+
+```{r data}
+
+
+Raw_data<-read_csv("R sample.csv")
+#Cleaning the data
+Raw_data$ride_lengths<-hms(Raw_data$Ride_Length)
+R_data<-clean_names(Raw_data)
+
+#Analyzing the data
+R<- R_data%>%
+  select(-ride_length)%>%
+  group_by(member_casual)%>%
+  arrange(-ride_lengths)
+
+#Counting the riders based on category
+table(R_data$member_casual)
+```
+
+**This chart illustrates the fluctuation in registered riders across categories. Despite the higher membership fee for annual members compared to casual riders, there was growth in both categories over the past year, indicating that the fee increment did not adversely impact registration.
+
+
+```{r pressure, echo=FALSE}
+
+      
+summary_datas <- data.frame(
+  member_casual = c("member", "casual"),
+  count = c(378.407, 48.480)  # these counts should be in thousands as per your data
+)
+view(summary_datas)
+
+# Convert counts to percentages
+total_counts <- sum(summary_datas$count)
+summary_datas$percentage <- (summary_datas$count / total_counts) * 100
+
+# Create the plot
+ggplot(data = summary_datas) +
+  geom_bar(mapping = aes(x = member_casual, y = percentage, fill = member_casual), stat = "identity") +
+  labs(title = "Rider Membership Data", subtitle = "variation in the number of registered riders based on category") +ylab("count of riders by category")+
+  theme(plot.title.position = "plot",
+        plot.title = element_text(hjust = 0.5),
+        plot.subtitle = element_text(hjust = 0.5)) +
+  scale_y_continuous(
+    limits = c(0, 100),  # Adjusted to 100% to include all data points
+    labels = percent_format(accuracy = 1, scale = 1/1),
+    breaks = seq(0, 100, 10)  # Adjust breaks to every 10%
+  )
+```
+
