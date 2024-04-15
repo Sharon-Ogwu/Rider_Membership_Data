@@ -61,7 +61,7 @@ summary_datas$percentage <- (summary_datas$count / total_counts) * 100
 # Creating the chart
 ggplot(data = summary_datas) +
   geom_bar(mapping = aes(x = member_casual, y = percentage, fill = member_casual), stat = "identity") +
-  labs(title = "Rider Membership Data", subtitle = "variation in the number of registered riders based on category") +ylab("count of riders by category")+
+  labs(title = "Rider Membership Data", subtitle = "variation in the number of registered riders based on category") +ylab("Percentage distribution of riders by category")+
   theme(plot.title.position = "plot",
         plot.title = element_text(hjust = 0.5),
         plot.subtitle = element_text(hjust = 0.5)) +
